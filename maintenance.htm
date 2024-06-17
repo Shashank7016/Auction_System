@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Maintenance</title>
+</head>
+<body>
+
+<h2>Maintenance</h2>
+
+<button onclick="processAuctionItems()">Process Auction Items</button>
+<button onclick="generateReport()">Generate Report</button>
+<div id="reportTable"></div>
+<div id="output"></div> <!-- Area to display messages or reports -->
+
+<script>
+    function processAuctionItems() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+        }
+    };
+    
+    xhttp.open("POST", "maintenance.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("action=processAuctionItems");
+}
+
+function generateReport() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("reportTable").innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("POST", "maintenance.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("action=generateReport");
+}
+
+</script>
+
+</body>
+</html>

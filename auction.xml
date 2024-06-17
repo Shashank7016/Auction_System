@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<auctions>
+    <item>
+        <itemNumber>1</itemNumber>
+        <sellerId>001</sellerId>
+        <itemName>Sample Item</itemName>
+        <category>Industrial</category>
+        <description>Sample description for the item.</description>
+        <reservePrice>100</reservePrice>
+        <buyItNowPrice>150</buyItNowPrice>
+        <startPrice>0</startPrice>
+        <duration>7</duration> <!-- in days -->
+        <startDate>2023-10-01</startDate>
+        <startTime>12:00:00</startTime>
+        <status>sold</status>
+        <latestBid>
+            <bidderId>7</bidderId>
+            <bidPrice>150</bidPrice>
+        </latestBid>
+    </item>
+    <!-- More items go here -->
+<item><itemNumber>2</itemNumber><sellerId>4</sellerId><itemName>cement</itemName><category>Industrial</category><description>concrete</description><reservePrice>90</reservePrice><buyItNowPrice>300</buyItNowPrice><startPrice>50</startPrice><duration>9000</duration><startDate>2023-10-22</startDate><startTime>12:14:03</startTime><status>in_progress</status><latestBid><bidderID/><bidPrice>90</bidPrice><bidderId>7</bidderId></latestBid></item><item><itemNumber>3</itemNumber><sellerId>5</sellerId><itemName>tv remote</itemName><category>Electronics</category><description>control</description><reservePrice>20</reservePrice><buyItNowPrice>100</buyItNowPrice><startPrice>10</startPrice><duration>900</duration><startDate>2023-10-22</startDate><startTime>12:14:49</startTime><status>in_progress</status><latestBid><bidderID/><bidPrice>10</bidPrice></latestBid></item><item><itemNumber>4</itemNumber><sellerId>3</sellerId><itemName>toy</itemName><category>Other</category><description>blue</description><reservePrice>30</reservePrice><buyItNowPrice>129</buyItNowPrice><startPrice>10</startPrice><duration>900</duration><startDate>2023-10-22</startDate><startTime>12:24:28</startTime><status>in_progress</status><latestBid><bidderID/><bidPrice>10</bidPrice></latestBid></item><item><itemNumber>5</itemNumber><sellerId/><itemName>toy</itemName><category>Other</category><description>dolph</description><reservePrice>90</reservePrice><buyItNowPrice>1000</buyItNowPrice><startPrice>82</startPrice><duration>1000</duration><startDate>2023-10-22</startDate><startTime>12:41:54</startTime><status>in_progress</status><latestBid><bidderID/><bidPrice>90</bidPrice><bidderId>7</bidderId></latestBid></item><item><itemNumber>6</itemNumber><sellerId>7</sellerId><itemName>bike</itemName><category>Electronics</category><description>new</description><reservePrice>80</reservePrice><buyItNowPrice>100</buyItNowPrice><startPrice>40</startPrice><duration>2</duration><startDate>2024-06-11</startDate><startTime>20:03:18</startTime><status>in_progress</status><latestBid><bidderID/><bidPrice>40</bidPrice></latestBid></item></auctions>

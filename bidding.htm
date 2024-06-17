@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Bidding Page</title>
+</head>
+<body>
+
+<h2>Available Auction Items</h2>
+
+<div id="auctionItems">
+    <!-- Auction items will be dynamically populated here using JavaScript and XMLHttpRequest -->
+</div>
+
+<script>
+// Function to fetch and display auction items
+function fetchAuctionItems() {
+    console.log("Fetching auction items...");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            displayAuctionItems(this);
+        }
+    };
+    xhttp.open("GET", "auction.xml", true);
+    xhttp.send();
+}
+
+// Function to display auction items
+function displayAuctionItems(xml) {
+    var xmlDoc = xml.responseXML;
+    var auctionItemsDiv = document.getElementById("auctionItems");
+    var items = xmlDoc.getElementsByTagName("item");
+    var output = "";
+
+    for (var i = 0; i < items.length; i++) {
+        var itemStatusElem = items[i].getElementsByTagName("status")[0];
+        var itemStatus = itemStatusElem ? itemStatusElem.textContent : null;
+
+        // Check if the item is sold, if yes then skip this iteration
+        if (itemStatus === "sold" || itemStatus === "failed") {
+            continue;
+        }
+
+        var itemNumberElem = items[i].getElementsByTagName("itemNumber")[0];
+        var itemNameElem = items[i].getElementsByTagName("itemName")[0];
+        var itemCategoryElem = items[i].getElementsByTagName("category")[0];
+        var itemDescriptionElem = items[i].getElementsByTagName("description")[0];
+        var buyItNowPriceElem = items[i].getElementsByTagName("buyItNowPrice")[0];
+        var currentBidPriceElem = items[i].getElementsByTagName("bidPrice")[0];
+
+        var itemNumber = itemNumberElem ? itemNumberElem.textContent : "N/A";
+        var itemName = itemNameElem ? itemNameElem.textContent : "N/A";
+        var itemCategory = itemCategoryElem ? itemCategoryElem.textContent : "N/A";
+        var itemDescription = itemDescriptionElem ? itemDescriptionElem.textContent.substring(0, 30) : "N/A";
+        var buyItNowPrice = buyItNowPriceElem ? buyItNowPriceElem.textContent : "N/A";
+        var currentBidPrice = currentBidPriceElem ? currentBidPriceElem.textContent : "N/A";
+
+        output += `
+            <div class="auctionItem">
+                <h3>Item Number: ${itemNumber}</h3>
+                <h3>${itemName}</h3>
+                <p>Category: ${itemCategory}</p>
+                <p>Description: ${itemDescription}...</p>
+                <p>Buy It Now Price: ${buyItNowPrice}</p>
+                <p>Current Bid Price: ${currentBidPrice}</p>
+                <button onclick="placeBid(${i})">Place Bid</button>
+                <button onclick="buyItNow(${i})">Buy It Now</button>
+            </div>
+        `;
+    }
+
+    auctionItemsDiv.innerHTML = output;
+}
+
+
+// Call the fetchAuctionItems function periodically, e.g., every 5 seconds
+setInterval(fetchAuctionItems, 5000);
+
+function isLoggedIn(callback) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            try {
+            var response = JSON.parse(this.responseText);
+            callback(response.loggedIn);
+            }
+            catch (e) {
+            console.error("Error parsing the response:", e);
+            console.log("Received response:", this.responseText);
+}
+        }
+    };
+    xhttp.open("GET", "check_login.php", true);
+    xhttp.send();
+}
+
+function placeBid(itemIndex) {
+    isLoggedIn(function(loggedIn) {
+        if (!loggedIn) {
+            alert("Please log in to place a bid.");
+            return;
+        }
+    var bidAmount = parseFloat(prompt("Enter your bid amount:"));
+    if (isNaN(bidAmount)) {
+        alert("Please enter a valid bid amount.");
+        return;
+    }
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            alert(response);
+            // If the bid was successful, refresh the auction items.
+            if (response.includes("Thank you! Your bid is recorded in ShopOnline.")) {
+                    fetchAuctionItems();
+                    console.log("Response from server: ", response);
+
+        }
+    };
+}
+    xhttp.open("POST", "register.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(`action=placeBid&itemIndex=${itemIndex}&bidAmount=${bidAmount}`);
+    });
+}
+
+function buyItNow(itemIndex) {
+    isLoggedIn(function(loggedIn) {
+        if (!loggedIn) {
+            alert("Please log in to buy this item.");
+            return;
+        }
+    var confirmation = confirm("Are you sure you want to buy this item now?");
+    if (!confirmation) return;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            alert(response);
+        }
+    };
+    
+    xhttp.open("POST", "register.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(`action=buyItNow&itemIndex=${itemIndex}`);
+    });
+}
+</script>
+</body>
+</html>
