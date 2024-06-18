@@ -1,11 +1,3 @@
 <?xml version="1.0"?>
 <customers>
-  <customer>
-    <customerId>001</customerId>
-    <firstName>John</firstName>
-    <surname>Doe</surname>
-    <email>john.doe@example.com</email>
-    <password>hashed_password_here</password>
-  </customer>
-  <!-- More customer entries here -->
-<customer><customerId>3</customerId><firstname>sa</firstname><surname>da</surname><email>heroine@gmail.com</email><password>$2y$10$kj6sKVIoBv064RVhZz9o/OfbJwWsXdlWPgB.LGJyV47wVPaJ7x7z6</password></customer><customer><customerId>4</customerId><firstname>sa</firstname><surname>sad</surname><email>bryanhovak@gmail.com</email><password>$2y$10$qyf1c6akFJw65Y5xJG/OzuCDWx55SChXaCZSu6GfHxGhtmv62EQky</password></customer><customer><customerId>5</customerId><firstname>nandi</firstname><surname>asd</surname><email>bryxarpitsingh@gmail.com</email><password>$2y$10$kWGTAlnoksHbJ1IgBW5tUOvjKmWAY/C02rdxDC6qcF0ISoPf/vwwm</password></customer><customer><customerId>6</customerId><firstname>sadw</firstname><surname>wqew</surname><email>sad@gmail.com</email><password>$2y$10$ollfwwOL7KB8U3juDByZauhOlpQxXMpf3CtUUAddElcZYzG0cf9Ty</password></customer><customer><customerId>7</customerId><firstname>asdsad</firstname><surname>sadsad</surname><email>bryanhovak3@gmail.com</email><password>2yBC3NXK7yUZI</password></customer></customers>
+</customers>

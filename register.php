@@ -113,15 +113,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"]))  {
         }
         $xml = simplexml_load_file('auction.xml');
         $itemIndex = intval($_POST["itemIndex"]);
-        $bidAmount = $_POST["bidAmount"];
-        // Use the customerId from the session as the bidderId.
+        $bidAmount = floatval($_POST["bidAmount"]);
         $bidderId = $_SESSION['customerId'];
-        $currentBidPrice = (float)$xml->item[$itemIndex]->bidPrice;
-        $startPrice = (float)$xml->item[$itemIndex]->startPrice;
-        $status = (string)$xml->item[$itemIndex]->status;
-        if ($bidAmount > $currentBidPrice && $bidAmount > $startPrice && $status != "sold") {
-            $xml->item[$itemIndex]->latestBid->bidPrice = $bidAmount;
-            $xml->item[$itemIndex]->latestBid->bidderId =  $bidderId;
+
+        $item = $xml->item[$itemIndex];
+        $startPrice = floatval($item->startPrice);
+        $latestBidPrice = isset($item->latestBid->bidPrice) ? floatval($item->latestBid->bidPrice) : $startPrice;
+        $status = (string)$item->status;
+
+        if ($status != "sold" && $bidAmount > $latestBidPrice) {
+            $item->latestBid->bidPrice = $bidAmount;
+            $item->latestBid->bidderId = $bidderId;
             $xml->asXML('auction.xml');
             echo "Thank you! Your bid is recorded in ShopOnline.";
         } else {
