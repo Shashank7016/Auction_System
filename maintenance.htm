@@ -11,14 +11,16 @@ The main purpose of this file is to store the frontend for maintennace.php
     <title>Maintenance</title>
 </head>
 <body>
-
+    <div class="container">
+        <div class="form-container">
 <h2>Maintenance</h2>
 
-<button onclick="processAuctionItems()">Process Auction Items</button>
-<button onclick="generateReport()">Generate Report</button>
+<button class="btn" onclick="processAuctionItems()">Process Auction Items</button>
+<button class="btn" onclick="generateReport()">Generate Report</button>
 <div id="reportTable"></div>
 <div id="output"></div> <!-- Area to display messages or reports -->
-
+</div>
+</div>
 <script>
 function processAuctionItems() {
     var xhttp = new XMLHttpRequest();
