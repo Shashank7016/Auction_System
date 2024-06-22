@@ -21,11 +21,16 @@ if (isset($_POST['login'])) {
     $isValidLogin = false;
     $user_customerId=""; 
     foreach ($xml->customer as $customer) {
-        if ($customer->email == $email && crypt($password, $customer->password)) {
+        // Check if email matches and verify password using crypt
+        $storedPassword = (string) $customer->password; // Cast to string
+        // Check if email matches and verify password using crypt
+        if ((string) $customer->email === $email && hash_equals($storedPassword, crypt($password, $storedPassword))) 
+        {
             $isValidLogin = true;
             $user_customerId = (string) $customer->customerId;
             break;
         }
+
     }
 
     if ($isValidLogin) {
@@ -80,8 +85,23 @@ if (isset($_POST['register'])) {
         exit;
     }
 
+    foreach ($xml->customer as $customer) {
+        if ($customer->email == $email) {
+            $emailExists = true;
+            break;
+        }
+    }
+
+    if ($emailExists) {
+        $_SESSION['error'] = "Email already registered.";
+        header('Location: login.php?register=1');
+        exit;
+    }
+
+    // Generate a salt and hash the password using crypt
+    $salt = '$6$' . bin2hex(random_bytes(8)) . '$'; // Using SHA-512 for hashing
+    $hashedPassword = crypt($password, $salt);
     // Add new user to XML with hashed password
-    $hashedPassword = crypt($password);
     $newCustomer = $xml->addChild('customer');
     $newCustomer->addChild('customerId', count($xml->children()) + 1);  // Assuming ID is a sequence number
     $newCustomer->addChild('firstname', $firstname);
