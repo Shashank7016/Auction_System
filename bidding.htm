@@ -18,6 +18,21 @@
     </div>
 </div>
     <script>
+    function checkLoginStatus(callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                if (!response.loggedIn) {
+                    window.location.href = 'login.php';
+                } else {
+                    callback();
+                }
+            }
+        };
+        xhttp.open("GET", "check_login.php", true);
+        xhttp.send();
+    }
     // Function to fetch and display auction items
     function fetchAuctionItems() {
         console.log("Fetching auction items...");
@@ -77,28 +92,28 @@ function displayAuctionItems(xml) {
 
     auctionItemsDiv.innerHTML = output;
 }
-
+// Initial check for login status and fetch auction items if logged in
+checkLoginStatus(fetchAuctionItems);
 
 // Call the fetchAuctionItems function periodically, e.g., every 5 seconds
 setInterval(fetchAuctionItems, 5000);
 
-function isLoggedIn(callback) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            try {
-            var response = JSON.parse(this.responseText);
-            callback(response.loggedIn);
+function checkLoginStatus(callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                if (!response.loggedIn) {
+                    window.location.href = 'login.php?error=Please log in first to view or bid on auction items.';
+                } else {
+                    callback();
+                }
             }
-            catch (e) {
-            console.error("Error parsing the response:", e);
-            console.log("Received response:", this.responseText);
-}
-        }
-    };
-    xhttp.open("GET", "check_login.php", true);
-    xhttp.send();
-}
+        };
+        xhttp.open("GET", "check_login.php", true);
+        xhttp.send();
+    }
+
 
 function placeBid(itemIndex) {
     isLoggedIn(function(loggedIn) {

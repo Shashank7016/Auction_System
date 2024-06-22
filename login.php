@@ -12,11 +12,14 @@
     //The main purpose of this file is to allow user to login if registration is successful
     session_start();
     if (isset($_SESSION['error'])) {
-        echo '<div class="error-message">' 
-        . $_SESSION['error'] . 
-        '</div>';
+        echo '<div class="error-message">' . $_SESSION['error'] . '</div>';
         unset($_SESSION['error']);
     }
+
+    if (isset($_GET['error'])) {
+        echo '<div class="error-message">' . htmlspecialchars($_GET['error']) . '</div>';
+    }
+
     
     if (isset($_GET['register'])) {
         echo '

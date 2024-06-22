@@ -2,6 +2,10 @@
 //Student name:Shashank Chauhan 
 //The main purpose of this file is to take user input for details of item to be placed in the auction
 session_start();
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header('Location: login.php?error=Please log in first to list your item.');
+    exit();
+}
 $categories = [
     'Electronics' => true,
     'Industrial' => true,
