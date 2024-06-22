@@ -9,26 +9,27 @@
     <title>Bidding Page</title>
 </head>
 <body>
-
-<h2>Available Auction Items</h2>
-
-<div id="auctionItems">
-    <!-- Auction items will be dynamically populated here using JavaScript and XMLHttpRequest -->
+<div class="container">
+    <div class="form-container">
+        <h2>Available Auction Items</h2>
+        <div id="auctionItems">
+        <!-- Auction items will be dynamically populated here using JavaScript and XMLHttpRequest -->
+        </div>
+    </div>
 </div>
-
-<script>
-// Function to fetch and display auction items
-function fetchAuctionItems() {
-    console.log("Fetching auction items...");
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            displayAuctionItems(this);
-        }
-    };
-    xhttp.open("GET", "auction.xml", true);
-    xhttp.send();
-}
+    <script>
+    // Function to fetch and display auction items
+    function fetchAuctionItems() {
+        console.log("Fetching auction items...");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                displayAuctionItems(this);
+            }
+        };
+        xhttp.open("GET", "auction.xml", true);
+        xhttp.send();
+    }
 
 // Function to display auction items
 function displayAuctionItems(xml) {

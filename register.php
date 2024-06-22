@@ -81,7 +81,7 @@ if (isset($_POST['register'])) {
     }
 
     // Add new user to XML with hashed password
-    $hashedPassword = crypt($password, PASSWORD_DEFAULT);
+    $hashedPassword = crypt($password);
     $newCustomer = $xml->addChild('customer');
     $newCustomer->addChild('customerId', count($xml->children()) + 1);  // Assuming ID is a sequence number
     $newCustomer->addChild('firstname', $firstname);
