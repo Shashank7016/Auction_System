@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
     }
      else {
         $_SESSION['error'] = "Email or Password Incorrect";
-        header('Location: login.php?error=login'); // Failed login
+        header('Location: login.php'); // Failed login
         exit;
     }
 }
