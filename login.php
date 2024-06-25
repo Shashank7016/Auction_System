@@ -67,6 +67,8 @@
                 </form>
                 <div class="register-link">
                     <a href="login.php?register=1">Register as a new user</a>
+                <div class="forgot-password-link">
+                    <a href="forgot_password.php">Forgot Password?</a>
                 </div>
         <?php
     }

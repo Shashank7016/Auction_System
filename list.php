@@ -34,6 +34,11 @@ if (file_exists('auction.xml')) {
     <title>List an Item</title>
 </head>
 <body>
+    <div class="logout-container">
+        <form action="logout.php" method="post">
+            <button type="submit" class="btn-logout">Logout</button>
+        </form>
+    </div>
      <div class="container">
         <div class="form-container">
             <h2>List an Item for Selling</h2>
