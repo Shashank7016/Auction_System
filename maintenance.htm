@@ -26,8 +26,9 @@ The main purpose of this file is to store the frontend for maintennace.php
         <input type="password" id="admin_password" name="admin_password" required>
     </div>
     <div class="form-group">
-        <button type="button" onclick="validatePassword()">Submit</button>
+        <button type="button" class="btn" onclick="validatePassword()">Submit</button>
     </div>
+    <div id="errorMessage" style="color: red;"></div>
 </form>
 <div id="maintenanceContent" style="display:none;">
 <button class="btn" onclick="processAuctionItems()">Process Auction Items</button>
@@ -55,6 +56,12 @@ The main purpose of this file is to store the frontend for maintennace.php
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("password=" + password);
     }
+    document.getElementById('admin_password').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            validatePassword();
+        }
+    });
 function processAuctionItems() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -84,7 +91,25 @@ function generateReport() {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("action=generateReport");
 }
-</script>
+function checkAdminSession() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText === 'valid') {
+                    document.getElementById('passwordForm').style.display = 'none';
+                    document.getElementById('maintenanceContent').style.display = 'block';
+                } else {
+                    document.getElementById('passwordForm').style.display = 'block';
+                    document.getElementById('maintenanceContent').style.display = 'none';
+                }
+            }
+        };
+        xhttp.open("GET", "admin_login.php", true); // Checking session in admin_login.php
+        xhttp.send();
+    }
 
+    window.onload = checkAdminSession;
+
+</script>
 </body>
 </html>

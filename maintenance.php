@@ -1,7 +1,12 @@
 <?php
 //The main purpose of this file is to validate logic for processing and generating reports
+session_start();
 header('Content-Type: application/json');
 
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    echo json_encode(['message' => 'Unauthorized']);
+    exit();
+}
 if (isset($_POST['action'])) {
     $xml = simplexml_load_file('auction.xml');
     $currentDateTime = new DateTime();
